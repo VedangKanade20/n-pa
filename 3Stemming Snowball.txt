@@ -1,0 +1,21 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import SnowballStemmer
+
+# Download required dataset (only needed once)
+nltk.download('punkt')
+
+# Sample text
+text = "The running cats were jumping and loving the playful environment."
+
+# Tokenize the text
+words = word_tokenize(text)
+
+# Initialize Snowball Stemmer for English
+snowball = SnowballStemmer("english")
+
+# Apply Snowball Stemming
+snowball_stemmed = [snowball.stem(word) for word in words]
+# Print results
+print("Original Words:", words)
+print("Snowball Stemmed Words:", snowball_stemmed)

@@ -1,0 +1,11 @@
+import re
+
+text = "Hello!! How you doin? visca barca."
+
+#Tokenize using regex (splitting on spaces and punctaution)
+tokens = re.findall(r'\w+', text)
+print("Regex Tokenization: " , tokens)
+
+#Tokenize sentences using regex
+sentences = re.split(r'(?=[.!?])\s+', text)
+print("Regex Sentence Tokenization: ", sentences)

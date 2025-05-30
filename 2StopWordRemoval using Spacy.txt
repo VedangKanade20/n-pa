@@ -1,0 +1,11 @@
+import spacy
+nlp = spacy.load("en_core_web_sm")
+text = "This is a simple example demonstrating stop word removal in NLP."
+
+# Process text with spaCy
+doc = nlp(text)
+
+# Remove stop words
+filtered_words = [token.text for token in doc if not token.is_stop]
+
+print("Filtered Words:", filtered_words)

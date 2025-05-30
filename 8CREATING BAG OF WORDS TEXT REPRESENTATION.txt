@@ -1,0 +1,22 @@
+import nltk
+import numpy as np
+from collections import Counter
+#Ensure you have the necesary NLTJ resources
+nltk.download('punkt')
+nltk.download('punkt_tab')
+texts=[
+    "The cat sat on the mat",
+    "The dog sat on the log"
+]
+# Tokenize the texts
+tokenized_texts=[nltk.word_tokenize(text.lower()) for text in texts]
+#Create a vocabulary (set of all unique words)
+vocabulary=set(word for text in tokenized_texts for word in text)
+print(vocabulary)
+#Bag of words (BoW) representation
+def get_bow_representation(tokens, vocabulary):
+    return [tokens.count(word) for word in vocabulary]
+bow_vectors=[get_bow_representation(text, vocabulary) for text in tokenized_texts]
+#Print BoW vectors
+print("BoW vectors:")
+print(np.array(bow_vectors))

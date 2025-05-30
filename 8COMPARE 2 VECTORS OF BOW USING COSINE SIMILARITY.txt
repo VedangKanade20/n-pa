@@ -1,0 +1,28 @@
+import nltk
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+
+
+# Ensure you have the necessary NLTK resources
+nltk.download('punkt')
+texts = [
+    "The cat sat on the mat",
+    "The dog sat on the log"
+]
+ # Tokenize the texts
+tokenized_texts = [nltk.word_tokenize(text.lower()) for text in texts]
+# Create a vocabulary (set of all unique words)
+vocabulary = set(word for text in tokenized_texts for word in text)
+print(vocabulary)
+# Bag of Words (BoW) representation
+def get_bow_representation(tokens, vocabulary):
+    return [tokens.count(word) for word in vocabulary]
+bow_vectors = [get_bow_representation(text, vocabulary) for text in tokenized_texts]
+
+# Print BoW vectors
+print("BoW vectors:")
+print(np.array(bow_vectors))
+bow_similarity = cosine_similarity([bow_vectors[0]], [bow_vectors[1]])[0][0]
+print(bow_similarity)

@@ -1,0 +1,52 @@
+import nltk
+import numpy as np
+from collections import Counter
+from math import log
+
+
+# Ensure you have the necessary NLTK resources
+nltk.download('punkt')
+
+texts = [
+    "The cat sat on the mat",
+    "The dog sat on the log"
+]
+
+# Tokenize the texts
+tokenized_texts = [nltk.word_tokenize(text.lower()) for text in texts]
+
+# Create a vocabulary (set of all unique words)
+vocabulary = set(word for text in tokenized_texts for word in text)
+print("Vocabulary:", vocabulary)
+
+# Function to compute Term Frequency (TF)
+def get_tf(tokens, vocabulary):
+    tf_vector = [tokens.count(word) for word in vocabulary]
+    print("\nTF vectors:")
+    print(tf_vector)
+    return tf_vector
+# Function to compute Inverse Document Frequency (IDF)
+def get_idf(vocabulary, docs):
+    num_docs = len(docs)
+    idf_vector = []
+    for word in vocabulary:
+        # Count the number of documents containing the word
+        num_docs_with_word = sum(1 for doc in docs if word in doc)
+        # Calculate IDF as log(num_docs / (1 + num_docs_with_word)) to avoid division by zero
+        idf_value = log(num_docs / (1 + num_docs_with_word)) + 1  # Adding 1 to smooth
+        idf_vector.append(idf_value)
+    return idf_vector  # Fix indentation to return after loop completes
+# Function to compute TF-IDF
+def get_tfidf(tokens, vocabulary, idf_vector):
+    tf_vector = get_tf(tokens, vocabulary)
+    tfidf_vector = [tf * idf for tf, idf in zip(tf_vector, idf_vector)]
+    return tfidf_vector
+# Calculate IDF for the entire corpus
+idf_vector = get_idf(vocabulary, tokenized_texts)
+print("\nIDF vectors:")
+print(idf_vector)
+# Compute TF-IDF for each document
+tfidf_vectors = [get_tfidf(text, vocabulary, idf_vector) for text in tokenized_texts]
+# Print TF-IDF vectors
+print("\nTF-IDF vectors:")
+print(np.array(tfidf_vectors))

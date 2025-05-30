@@ -1,0 +1,17 @@
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize
+
+#Ensure 'punkt' is downloaded
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+#sample text
+text = "Hello!! How you doin? visca barca."
+
+#sentence tokenization
+sentences = sent_tokenize(text)
+print("Sentence Tokenization: ", sentences) #chek if it prints
+
+#word tokenization
+words = word_tokenize(text)
+print("Word Tokenization: ", words) #chek if it prints

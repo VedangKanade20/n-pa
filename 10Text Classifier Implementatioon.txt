@@ -1,0 +1,46 @@
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+def train_text_classifier(X, y):
+    # Split the data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    # Create a CountVectorizer
+    vectorizer = CountVectorizer()
+    X_train_vectorized = vectorizer.fit_transform(X_train)
+    X_test_vectorized = vectorizer.transform(X_test)
+
+    # Train a Naive Bayes classifier
+    classifier = MultinomialNB()
+    classifier.fit(X_train_vectorized, y_train)
+
+    # Make predictions
+    y_pred = classifier.predict(X_test_vectorized)
+
+    # Print classification report
+    print(classification_report(y_test, y_pred)) 
+
+    return vectorizer, classifier  # ✅ Proper indentation
+
+def classify_text(text, vectorizer, classifier):
+    text_vectorized = vectorizer.transform([text])
+    prediction = classifier.predict(text_vectorized)
+    return prediction[0]
+
+# Example usage
+X = [
+    "I love this movie, it's amazing!",
+    "This book is terrible, I couldn't finish it.",
+    "The food at this restaurant is delicious.",
+    "The service here is awful, I'm never coming back.",
+    "What a great experience, highly recommended!",
+]
+y = ["positive", "negative", "positive", "negative", "positive"]
+
+vectorizer, classifier = train_text_classifier(X, y)
+
+new_text = "The product exceeded my expectations, I'm very satisfied."
+prediction = classify_text(new_text, vectorizer, classifier)
+print(f"Prediction for '{new_text}': {prediction}")

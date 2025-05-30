@@ -1,0 +1,27 @@
+import nltk
+from nltk.stem import PorterStemmer, LancasterStemmer
+from nltk.tokenize import word_tokenize
+
+# Download required dataset (only needed once)
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+
+# Sample text
+text = "The cats are running faster than the dogs. They were caring and loving."
+
+# Tokenize the text
+words = word_tokenize(text)
+
+# Initialize stemmers
+porter = PorterStemmer()
+lancaster = LancasterStemmer()
+
+# Apply stemming
+porter_stemmed = [porter.stem(word) for word in words]
+lancaster_stemmed = [lancaster.stem(word) for word in words]
+
+# Print results
+print("Original Words:", words)
+print("Porter Stemmed Words:", porter_stemmed)
+print("Lancaster Stemmed Words:", lancaster_stemmed)

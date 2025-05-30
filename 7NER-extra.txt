@@ -1,0 +1,83 @@
+Evaluate the Model
+import spacy
+
+# Load the trained model
+nlp = spacy.load("custom_ner_model")
+# Test the model with a new sentence
+text = "Vedang Kanade founded Mangooooo."
+doc = nlp(text)
+for ent in doc.ents:
+    print(ent.text, ent.label_)
+
+
+
+ 
+
+2.
+import spacy
+
+# Load the trained model
+nlp = spacy.load("custom_ner_model")
+
+# Test the model with a new sentence
+text = "Steve Jobs founded Apple Elon Musk."
+doc = nlp(text)
+
+# Print detected entities
+for ent in doc.ents:
+    print(ent.text, ent.label_)
+
+ 
+
+
+
+
+
+import spacy
+from spacy.training.example import Example
+
+# Create a blank English model
+nlp = spacy.blank("mr")
+
+# Add the Named Entity Recognition (NER) pipeline
+ner = nlp.add_pipe("ner", last=True)
+
+# Add labels for entities
+ner.add_label("PERSON")
+ner.add_label("ORG")
+
+# Training data with labeled entities
+TRAIN_DATA = [
+    ("डेकन हि खूप छान आहे", {"entities": [(0, 4, "ORG")]})
+]
+
+# Training loop
+optimizer = nlp.begin_training()
+for i in range(10):  # Number of epochs (smaller for simplicity)
+    for text, annotations in TRAIN_DATA:
+        example = Example.from_dict(nlp.make_doc(text), annotations)
+        nlp.update([example], sgd=optimizer)
+
+for text, annotations in TRAIN_DATA:
+    doc = nlp.make_doc(text)
+    tags = spacy.training.offsets_to_biluo_tags(doc, annotations["entities"])
+    print(f"Text: {text}")
+    print(f"Tags: {tags}")
+
+# Save the trained model
+nlp.to_disk("custom_ner_model")
+print("Training completed and model saved!")
+ 
+
+import spacy
+
+# Load the trained model
+nlp = spacy.load("custom_ner_model")
+
+# Test the model with a new sentence
+text = "डेकन हि खूप छान आहे"
+doc = nlp(text)
+
+# Print detected entities
+for ent in doc.ents:
+    print(ent.text, ent.label_)

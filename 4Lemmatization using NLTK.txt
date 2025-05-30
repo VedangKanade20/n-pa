@@ -1,0 +1,21 @@
+import nltk
+from nltk.corpus import wordnet
+from nltk import pos_tag
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('punkt_tab')
+lemmatizer = WordNetLemmatizer()
+def get_wordnet_pos(word):
+  """Map NLTK POS tags to WordNet POS tags."""
+  tag = pos_tag([word])[0][1][0].upper()
+  tag_dict = {"J": wordnet.ADJ, "N": wordnet.NOUN, "V": wordnet.VERB, "R":
+wordnet.ADV}
+  return tag_dict.get(tag, wordnet.NOUN)
+sentence = "The striped bats are hanging on their feet for best"
+words = word_tokenize(sentence)
+lemmatized_words_pos = [lemmatizer.lemmatize(word, get_wordnet_pos(word)) for word in
+words]
+print("Lemmatized words with POS:", lemmatized_words_pos)

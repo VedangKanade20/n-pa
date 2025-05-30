@@ -1,0 +1,42 @@
+#9 Training and using word embeddings
+!pip install gensim
+
+
+from gensim.models import Word2Vec
+from nltk.tokenize import word_tokenize
+import nltk
+
+# Download the punkt tokenizer model
+nltk.download('punkt')
+
+# Function to train Word2Vec model
+def train_word_embeddings(sentences):
+    # Tokenize and lowercase each sentence
+    tokenized_sentences = [word_tokenize(sentence.lower()) for sentence in sentences]
+    # Train the Word2Vec model
+    model = Word2Vec(sentences=tokenized_sentences, vector_size=100, window=5, min_count=1, workers=4)
+    return model
+
+# Function to find similar words using a trained model
+def use_word_embeddings(model, word, top_n=5):
+    try:
+        similar_words = model.wv.most_similar(word, topn=top_n)
+        print(f"\nWords most similar to '{word}':")
+        for w, score in similar_words:
+            print(f"{w}: {score:.4f}")
+    except KeyError:
+        print(f"\n'{word}' is not in the vocabulary!")
+
+# Example sentences
+sentences = [
+    "The quick brown fox jumps over the lazy dog",
+    "A fox is a cunning animal",
+    "The dog barks at night",
+    "Foxes and dogs are different species"
+]
+
+# Train model
+model = train_word_embeddings(sentences)
+
+# Query similar words
+use_word_embeddings(model, "fox")

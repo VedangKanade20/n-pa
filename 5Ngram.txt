@@ -1,0 +1,18 @@
+#P5 Ngram
+from nltk import word_tokenize
+from nltk.util import ngrams
+import nltk
+nltk.download('punkt_tab')
+
+text="A sample bigram model example. A sample trigram model."
+
+tokens=word_tokenize(text)
+unigrams=list(ngrams(tokens,1))
+tokens=word_tokenize(text)
+bigrams=list(ngrams(tokens,2))
+tokens=word_tokenize(text)
+trigrams=list(ngrams(tokens,3))
+print("Original text",text)
+print("Unigram Text",unigrams)
+print("Bigram Text",bigrams)
+print("Trigram Text",trigrams)

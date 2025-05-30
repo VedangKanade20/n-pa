@@ -1,0 +1,13 @@
+from sklearn.feature_extraction.text import CountVectorizer
+
+# Sample documents
+documents = ["I love data science", "Data science is amazing"]
+
+# Convert to BoW representation
+vectorizer = CountVectorizer()
+bow_matrix = vectorizer.fit_transform(documents)
+
+# Display results
+print("Vocabulary:", vectorizer.get_feature_names_out())
+print("BoW Matrix:\n", bow_matrix.toarray())
+
